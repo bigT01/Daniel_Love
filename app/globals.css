@@ -1,0 +1,740 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --pink-100: #fce4ec;
+  --pink-200: #f8bbd0;
+  --pink-300: #f48fb1;
+  --pink-400: #f06292;
+  --pink-500: #ec407a;
+  --pink-600: #e91e63;
+  --purple-100: #f3e5f5;
+  --purple-200: #ce93d8;
+  --purple-300: #ba68c8;
+  --purple-400: #ab47bc;
+  --purple-500: #9c27b0;
+  --gold: #ffd700;
+  --bg-gradient: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 30%, #e8eaf6 60%, #fce4ec 100%);
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-border: rgba(255, 255, 255, 0.8);
+  --shadow-soft: 0 8px 32px rgba(233, 30, 99, 0.15);
+  --shadow-glow: 0 0 40px rgba(233, 30, 99, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: #4a1942;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   FLOATING HEARTS BACKGROUND
+   ============================================ */
+.floating-hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: floatUp linear infinite;
+  opacity: 0.4;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(110vh) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-10vh) rotate(720deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+.page-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+/* ============================================
+   GLASS CARD
+   ============================================ */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  padding: 2rem 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--shadow-soft);
+  animation: cardAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cardAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Once mounted, disable entry animation so re-renders don't replay it */
+.glass-card.card-no-entry {
+  animation: none;
+}
+
+/* Shake animation — toggled via DOM classList, not React state */
+.glass-card.card-shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(3px); }
+  30%, 50%, 70% { transform: translateX(-5px); }
+  40%, 60% { transform: translateX(5px); }
+}
+
+/* ============================================
+   HERO IMAGE
+   ============================================ */
+.hero-image-wrapper {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--pink-300);
+  box-shadow: 0 0 30px rgba(244, 143, 177, 0.5);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.hero-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(244, 143, 177, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(233, 30, 99, 0.6);
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+.title {
+  font-size: 1.75rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--pink-600), var(--purple-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #7b5ea7;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  opacity: 0.85;
+}
+
+.question-text {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #4a1942;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.buttons-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 80px;
+  position: relative;
+}
+
+.btn {
+  border: none;
+  border-radius: 50px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.btn-yes {
+  background: linear-gradient(135deg, var(--pink-500), var(--pink-600));
+  color: white;
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+  box-shadow: 0 6px 20px rgba(233, 30, 99, 0.35);
+}
+
+.btn-yes:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 30px rgba(233, 30, 99, 0.5);
+}
+
+.btn-yes:active {
+  transform: scale(0.95);
+}
+
+.btn-no {
+  background: linear-gradient(135deg, #bdbdbd, #9e9e9e);
+  color: white;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-no:hover {
+  background: linear-gradient(135deg, #a0a0a0, #808080);
+}
+
+/* ============================================
+   SAD EMOJI (when clicking No)
+   ============================================ */
+.sad-reaction {
+  position: fixed;
+  font-size: 3rem;
+  z-index: 100;
+  pointer-events: none;
+  animation: sadPop 1.2s ease-out forwards;
+}
+
+@keyframes sadPop {
+  0% {
+    opacity: 1;
+    transform: scale(0.3) translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.5) translateY(-20px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-120px);
+  }
+}
+
+/* ============================================
+   YAY PAGE
+   ============================================ */
+.yay-text {
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--pink-600), var(--gold), var(--purple-400));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 2s ease-in-out infinite;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.yay-subtitle {
+  font-size: 1.3rem;
+  color: var(--pink-600);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.celebration-image {
+  width: 260px;
+  height: 260px;
+  border-radius: 24px;
+  overflow: hidden;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 12px 40px rgba(233, 30, 99, 0.3);
+  animation: bounceIn 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.celebration-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-10deg);
+  }
+  60% {
+    transform: scale(1.1) rotate(3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.confetti-emoji {
+  font-size: 2rem;
+  display: inline-block;
+  animation: confettiSpin 1s ease-in-out infinite;
+}
+
+@keyframes confettiSpin {
+  0%, 100% { transform: rotate(-10deg) scale(1); }
+  50% { transform: rotate(10deg) scale(1.2); }
+}
+
+.redirect-text {
+  font-size: 0.9rem;
+  color: #9575cd;
+  margin-top: 1rem;
+  font-weight: 600;
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ============================================
+   CHOOSING PAGE — PLACE CARDS
+   ============================================ */
+.choose-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--pink-600), var(--purple-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.choose-subtitle {
+  font-size: 1rem;
+  color: #7b5ea7;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.places-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.place-card {
+  position: relative;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid transparent;
+  border-radius: 20px;
+  padding: 1.2rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(233, 30, 99, 0.1);
+  animation: cardSlideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.place-card:nth-child(1) { animation-delay: 0.1s; }
+.place-card:nth-child(2) { animation-delay: 0.2s; }
+.place-card:nth-child(3) { animation-delay: 0.3s; }
+.place-card:nth-child(4) { animation-delay: 0.4s; }
+.place-card:nth-child(5) { animation-delay: 0.5s; }
+.place-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes cardSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.place-card:hover {
+  transform: scale(1.05) translateY(-4px);
+  border-color: var(--pink-400);
+  box-shadow: 0 8px 30px rgba(233, 30, 99, 0.25);
+}
+
+.place-card:active {
+  transform: scale(0.96);
+}
+
+.place-card.selected {
+  border-color: var(--pink-500);
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(156, 39, 176, 0.1));
+  box-shadow: 0 8px 30px rgba(233, 30, 99, 0.3);
+}
+
+.place-emoji {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.place-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #4a1942;
+}
+
+.place-desc {
+  font-size: 0.75rem;
+  color: #9575cd;
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, var(--pink-500), var(--purple-400));
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  box-shadow: 0 6px 25px rgba(233, 30, 99, 0.4);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: pulse-btn 2s ease-in-out infinite;
+}
+
+.btn-confirm:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 35px rgba(233, 30, 99, 0.55);
+}
+
+.btn-confirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  animation: none;
+}
+
+@keyframes pulse-btn {
+  0%, 100% { box-shadow: 0 6px 25px rgba(233, 30, 99, 0.4); }
+  50% { box-shadow: 0 6px 35px rgba(233, 30, 99, 0.65); }
+}
+
+/* ============================================
+   FINAL CONFIRMED PAGE
+   ============================================ */
+.confirmed-card {
+  animation: cardAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.confirmed-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounceIn 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.confirmed-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--pink-600), var(--purple-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.confirmed-place {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--pink-600);
+  margin-bottom: 1rem;
+}
+
+.confirmed-details {
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.08), rgba(156, 39, 176, 0.08));
+  border-radius: 16px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #4a1942;
+}
+
+.detail-row + .detail-row {
+  border-top: 1px solid rgba(233, 30, 99, 0.1);
+}
+
+.detail-icon {
+  font-size: 1.4rem;
+}
+
+.confirmed-image {
+  width: 220px;
+  height: 220px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 8px 30px rgba(233, 30, 99, 0.25);
+}
+
+.confirmed-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.confirmed-footer {
+  font-size: 0.95rem;
+  color: #7b5ea7;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.heart-divider {
+  font-size: 1.5rem;
+  margin: 0.75rem 0;
+  letter-spacing: 0.3rem;
+}
+
+/* ============================================
+   PROGRESS DOTS
+   ============================================ */
+.progress-dots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pink-200);
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: var(--pink-500);
+  width: 28px;
+  border-radius: 5px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+/* ============================================
+   DATE PICKER
+   ============================================ */
+.date-picker-row {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.date-picker-row::-webkit-scrollbar {
+  display: none;
+}
+
+.date-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+  padding: 0.6rem 0.5rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  gap: 0.15rem;
+}
+
+.date-chip:hover {
+  transform: scale(1.05);
+  border-color: var(--pink-300);
+}
+
+.date-chip-active {
+  border-color: var(--pink-500);
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.12), rgba(156, 39, 176, 0.12));
+  box-shadow: 0 4px 16px rgba(233, 30, 99, 0.2);
+}
+
+.date-chip-day {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #9575cd;
+  text-transform: uppercase;
+}
+
+.date-chip-num {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #4a1942;
+  line-height: 1;
+}
+
+.date-chip-month {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #9575cd;
+}
+
+.date-chip-today {
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: var(--pink-500);
+  background: rgba(233, 30, 99, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  margin-top: 0.1rem;
+}
+
+/* ============================================
+   TIME SLOTS
+   ============================================ */
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  animation: cardSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.time-chip {
+  padding: 0.6rem 0.3rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #4a1942;
+  text-align: center;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.time-chip:hover {
+  transform: scale(1.06);
+  border-color: var(--pink-300);
+}
+
+.time-chip-active {
+  border-color: var(--pink-500);
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.15), rgba(156, 39, 176, 0.15));
+  color: var(--pink-600);
+  box-shadow: 0 4px 14px rgba(233, 30, 99, 0.2);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (min-width: 768px) {
+  .glass-card {
+    padding: 3rem 2.5rem;
+    max-width: 480px;
+  }
+
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .question-text {
+    font-size: 1.6rem;
+  }
+
+  .hero-image-wrapper {
+    width: 220px;
+    height: 220px;
+  }
+
+  .places-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 520px;
+  }
+
+  .yay-text {
+    font-size: 4rem;
+  }
+
+  .time-slots-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
