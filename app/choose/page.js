@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import FloatingHearts from "../components/FloatingHearts";
 import Image from "next/image";
@@ -63,8 +63,9 @@ export default function ChoosePage() {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState(null);
 
-  // Generate the next 7 days for the date picker
-  const dates = useMemo(() => {
+  const [dates, setDates] = useState([]);
+
+  useEffect(() => {
     const days = [
       "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб",
     ];
@@ -84,7 +85,7 @@ export default function ChoosePage() {
         isToday: i === 0,
       });
     }
-    return result;
+    setDates(result);
   }, []);
 
   const handlePlaceConfirm = useCallback(() => {
