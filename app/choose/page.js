@@ -78,7 +78,7 @@ export default function ChoosePage() {
       const d = new Date();
       d.setDate(d.getDate() + i);
       result.push({
-        key: d.toISOString().split("T")[0],
+        key: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`,
         dayName: days[d.getDay()],
         dayNum: d.getDate(),
         month: months[d.getMonth()],
@@ -93,9 +93,23 @@ export default function ChoosePage() {
     setStep("datetime");
   }, [selectedPlace]);
 
-  const handleDateTimeConfirm = useCallback(() => {
+  const handleDateTimeConfirm = useCallback(async () => {
     if (!selectedPlace || !selectedDate || !selectedTime) return;
     const place = PLACES.find((p) => p.id === selectedPlace);
+    try {
+      await fetch("/api/dates", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          place: place.name,
+          emoji: place.emoji,
+          date: selectedDate,
+          time: selectedTime,
+        }),
+      });
+    } catch {
+      // Don't block the confirmation screen if saving fails
+    }
     const dateObj = dates.find((d) => d.key === selectedDate);
     const params = new URLSearchParams({
       place: place.name,

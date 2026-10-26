@@ -738,3 +738,23 @@ body {
     grid-template-columns: repeat(6, 1fr);
   }
 }
+
+/* ============================================
+   DATES LIST (/dates)
+   ============================================ */
+.dates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.dates-item-main {
+  font-weight: 700;
+}
+
+.dates-item-sub {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
